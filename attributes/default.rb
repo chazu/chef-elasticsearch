@@ -40,12 +40,12 @@ default['elasticsearch']['server_group'] = "elasticsearch"
 default['elasticsearch']['server_ulimit'] = 64000
 default['elasticsearch']['clustername'] = "elasticsearch"
 default['elasticsearch']['number_shards'] = 5
-default['elasticsearch']['number_replicas'] = 1 
+default['elasticsearch']['number_replicas'] = 1
 default['elasticsearch']['bind_host'] = "0.0.0.0"
 default['elasticsearch']['publish_host'] = nil
 default['elasticsearch']['port_tcp'] = nil
 default['elasticsearch']['port_http'] = nil
 default['elasticsearch']['http_disable'] = false
-default['elasticsearch']['mem_mlock'] = true
+default['elasticsearch']['mem_mlock'] = false
 default['elasticsearch']['mem_heap'] = "#{(node['memory']['total'].to_i - (node['memory']['total'].to_i/3) ) / 1024}m"
 

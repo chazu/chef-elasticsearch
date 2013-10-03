@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+server_clustername          = node['elasticsearch']['clustername']
 server_user                 = node['elasticsearch']['server_user']
 server_group                = node['elasticsearch']['server_group']
 server_url                  = node['elasticsearch']['server_url']
@@ -56,6 +56,18 @@ end
         group server_group
         mode "0755"
     end
+end
+
+logfiles = ["#{server_clustername}.log",
+  "#{server_clustername}_index_search_slowlog.log"]
+
+logfiles.each do |file|
+  file "#{server_logs}/#{file}" do
+  action :create
+  owner server_user
+  group server_group
+  mode "0655"
+  end
 end
 
 unless FileTest.exists?("#{server_path}/bin/plugin")
@@ -113,7 +125,6 @@ template "#{server_etc}/elasticsearch.conf" do
     owner "root"
     group "root"
     mode 0644
-    notifies :restart, 'service[elasticsearch]'
 end
 
 template "#{server_etc}/elasticsearch.yml" do
@@ -121,15 +132,13 @@ template "#{server_etc}/elasticsearch.yml" do
     owner "root"
     group "root"
     mode 0644
-    notifies :restart, 'service[elasticsearch]'
 end
 
-template "#{server_etc}/logging.yml" do
+template "#{server_path}/config/logging.yml" do
     source "logging.yml.erb"
     owner "root"
     group "root"
     mode 0644
-    notifies :restart, 'service[elasticsearch]'
 end
 
 ruby_block "install elasticsearch plugins" do

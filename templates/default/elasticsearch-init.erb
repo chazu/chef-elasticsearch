@@ -28,7 +28,7 @@ APP_NAME="elasticsearch"
 APP_LONG_NAME="ElasticSearch"
 
 # Wrapper
-WRAPPER_CMD="$ES_HOME/bin/service/exec/elasticsearch"
+WRAPPER_CMD="$ES_HOME/<%= node['elasticsearch']['service_bin'] -%>"
 WRAPPER_CONF="<%= node['elasticsearch']['server_etc'] %>/elasticsearch.conf"
 
 # Priority at which to run the wrapper.  See "man nice" for valid priorities.
