@@ -44,9 +44,10 @@ end
 
 [server_path, server_etc, server_plugins].each do |folder|
     directory folder do
-        owner "root"
-        group "root"
-        mode "0755"
+    recursive true
+    owner "root"
+    group "root"
+    mode "0755"
     end
 end
 
